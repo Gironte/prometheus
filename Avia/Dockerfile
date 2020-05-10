@@ -4,7 +4,7 @@ EXPOSE 80
  
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY ./MetricsDemo.csproj .
+COPY ./Avia.csproj .
 RUN ls
 RUN dotnet restore "Avia.csproj"
 COPY . .

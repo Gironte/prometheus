@@ -28,7 +28,7 @@ namespace Avia
                 .Configuration.Configure(p =>
                 {
                     p.DefaultContextLabel = "Application";
-                    p.GlobalTags.Add("app", "MetricsDemo");
+                    p.GlobalTags.Add("app", "avia");
                     p.Enabled = true;
                     p.ReportingEnabled = true;
                 })

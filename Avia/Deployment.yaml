@@ -1,0 +1,44 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: avia
+  labels:
+    app: web
+spec:
+  replicas: 1 # сколько подов поднять (инстансов запущенных приложений)
+ 
+  # селектор решает, на какие шаблоны распространяется деплой
+  selector:
+    matchLabels:
+      app: avia
+ 
+  template:
+    metadata:
+      labels:
+        app: avia # по этой метке ищет selector в kind: Service
+    spec:
+      containers:
+      - name: avia # имя деплоя
+        image: localhost:5000/sansys/avia # образ в докере
+        ports:
+        - containerPort: 80 # какой порт слушает приложение внутри докера
+ 
+# ВАЖНО: три дефиса делят файл, как бы на два отдельных ямла
+---
+ 
+kind: Service
+apiVersion: v1
+metadata:
+  name: avia # имя для прометеуса __meta_kubernetes_service_name="avia", см https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config
+  labels:
+    apptype: business # имя для прометеуса __meta_kubernetes_service_label_apptype="business" - запомни
+    instancetype: web # имя для прометеуса __meta_kubernetes_service_label_instancetype="web"
+spec:
+  selector:
+    app: avia # селектор приложений по labels:app
+  type: LoadBalancer # реверспрокси из вне до подов
+  ports:
+  - protocol: TCP # имя для прометеуса _meta_kubernetes_service_port_protocol="TCP"
+    port: 9376
+    targetPort: 80
+    name: portapi # имя для прометеуса __meta_kubernetes_service_port_name="portapi"

@@ -8,7 +8,7 @@ namespace Avia.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : Controller
+    public class PingController : Controller
     {
         [HttpGet]
         public IActionResult Get()

@@ -37,4 +37,9 @@
     <Folder Include="Services\" />
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
